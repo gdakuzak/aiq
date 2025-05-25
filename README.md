@@ -69,11 +69,12 @@ cd aiq
   docker exec -it $(docker compose ps -q php-fpm) sh
   ```
 
-- Caso for a primeira vez que voce está fazendo o startup, siga os passos:
+- Caso for a **primeira vez** que voce está fazendo o startup, siga os passos:
   - Execute o comando de instalação das dependencias:
 
     ```sh
     composer install
+    php artisan migrate
     ```
 
   - Execute o comando

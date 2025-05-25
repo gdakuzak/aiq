@@ -1,6 +1,7 @@
 services:
   php-fpm: &default
     image: aiq_gdakuzak:latest
+    # user: www-data:www-data
     build:
       context: .
       target: base

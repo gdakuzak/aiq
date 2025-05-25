@@ -14,4 +14,6 @@ RUN echo "xdebug.mode=develop,coverage" > /usr/local/etc/php/conf.d/00_xdebug.in
 
 WORKDIR /application
 COPY . .
-RUN chmod 777 -R /application/storage
+RUN touch ./storage/logs/laravel.log
+RUN chown www-data:www-data -R ./storage
+RUN chmod -R 777 ./storage
