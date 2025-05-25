@@ -26,31 +26,66 @@ Acesse a [página](/docs/melhorias.md) para encontrar melhorias que poderemos fa
 
 ### Instalação e Preparação
 
-- Clone o repositorio: `git@github.com:gdakuzak/aiq.git`
-- Entrar na pasta do projeto: `cd aiq`
+- Clone o repositorio
+
+```sh
+git clone git@github.com:gdakuzak/aiq.git
+```
+
+- Entrar na pasta do projeto:
+
+```sh
+cd aiq
+```
+
 - Copie o `.env.example` para `.env`
-  - Se tiver usando Linux: `cp .env.example .env`
+
+  - Se tiver usando Linux:
+
+    ```sh
+    cp .env.example .env
+    ```
+
 - Altere os parametros:
-  - `DB_USERNAME=postgres`
-  - `DB_PASSWORD=postgres`
+
+  ```conf
+  DB_USERNAME=postgres
+  DB_PASSWORD=postgres
+  ```
+  
 - Execute o comando para buildar a imagem: `docker compose build`
 
 ### Docker - Startup
 
 - Subir docker
 
-```sh
-docker compose up
-```
+  ```sh
+  docker compose up
+  ```
 
-- ir para a pasta do projeto e rodar o comando:
+- ir para a pasta do projeto (`cd aiq`) e rodar o comando:
 
-```sh
-docker exec -it $(docker compose ps -q php-fpm) sh
-```
+  ```sh
+  docker exec -it $(docker compose ps -q php-fpm) sh
+  ```
 
 - Caso for a primeira vez que voce está fazendo o startup, siga os passos:
-  - Execute o comando: `php artisan key:generate`;
+  - Execute o comando
+  
+    ```sh
+    php artisan key:generate
+    ```
+
+### Executar
+
+- Com o Postman, crie o env com os parametros a abaixo, ou faça utilize o [env disponibilizado](/docs/aiq-env.postman_environment.json)
+
+  | Param | Valor |
+  | --- | --- |
+  | HOST | http://localhost:8000|
+  | token | {vazio} |
+
+- Depois, import o [JSON disponibilizado](/docs/aiq.postman_collection.json) para fazer as execuções.
 
 
 ### Testes
