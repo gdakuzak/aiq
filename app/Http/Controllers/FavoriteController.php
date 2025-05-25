@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Service\FavoriteService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FavoriteController extends Controller
@@ -16,15 +17,15 @@ class FavoriteController extends Controller
         $this->favoriteService = $favoriteService;
     }
 
-    public function show(int $user_id)
+    public function show()
     {
-        return response()->json($this->favoriteService->renderByUser($user_id), 200);
+        return response()->json($this->favoriteService->renderByUser(Auth::id()), 200);
     }
 
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
+            // 'user_id' => 'required|integer|exists:users,id',
             'product_id' => 'required|integer|unique:favorites,product_id,NULL,NULL,user_id,' . $request->user_id,
         ], [
             'user_id.required' => 'user is required.',
@@ -42,7 +43,9 @@ class FavoriteController extends Controller
         }
 
         try {
-            $this->favoriteService->buildInsert($request->all());
+            $this->favoriteService->buildInsert($request->merge([
+                'user_id' => Auth::id(),
+            ])->all());
 
             return response()->json([
                 'status' => 'created'
@@ -61,11 +64,8 @@ class FavoriteController extends Controller
     public function delete(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
             'product_id' => 'required|integer',
         ], [
-            'user_id.required' => 'user is required.',
-            'user_id.integer' => 'user need be int.',
             'product_id.required' => 'product is required.',
             'product_id.integer' => 'user need be int.',
         ]);
@@ -77,7 +77,9 @@ class FavoriteController extends Controller
         }
 
         try {
-            $this->favoriteService->buildDelete($request->all());
+            $this->favoriteService->buildDelete($request->merge([
+                'user_id' => Auth::id(),
+            ])->all());
 
             return response()->json([
                 'status' => 'deleted'
