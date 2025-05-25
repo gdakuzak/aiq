@@ -2,7 +2,7 @@ name: tests
 on:
   push:
     branches:
-      - qa
+      - main
 jobs:
   test:
     name: Run tests
