@@ -1,7 +1,16 @@
 # aiq
 
+## Decisões
 
-## Docker
+Acesse a [página](/docs/decisoes.md) para verificar as justificativas que foram utilziadas para a aplicação das decisões.
+
+## Melhorias
+
+Acesse a [página](/docs/melhorias.md) para encontrar melhorias que poderemos fazer no sistema no futuro.
+
+## Técnico
+
+### Docker
 
 - Subir docker
 
