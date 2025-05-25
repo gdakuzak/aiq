@@ -1,6 +1,13 @@
 # aiq
 
-## Acessar Docker
+
+## Docker
+
+- Subir docker
+
+```sh
+docker compose up
+```
 
 - ir para a pasta do projeto e rodar o comando:
 
