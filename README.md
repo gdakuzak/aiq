@@ -10,7 +10,7 @@ Acesse a [página](/docs/melhorias.md) para encontrar melhorias que poderemos fa
 
 ## Técnico
 
-### Docker
+### Docker - Startup
 
 - Subir docker
 
@@ -23,3 +23,12 @@ docker compose up
 ```sh
 docker exec -it $(docker compose ps -q php-fpm) sh
 ```
+
+### Testes
+
+- Testes automaticos com Github Actions: [Clique Aqui](https://github.com/gdakuzak/aiq/actions/workflows/tests.yaml)
+- Para testes no ambiente:
+  - Após executar os passos do [Startup](#docker---startup), execute o comando:
+    ```sh
+    php artisan test
+    ```
