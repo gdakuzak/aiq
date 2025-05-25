@@ -55,5 +55,38 @@ class FavoriteController extends Controller
         }
     }
 
-    public function delete() {}
+    public function delete(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'product_id' => 'required|integer',
+        ], [
+            'user_id.required' => 'user is required.',
+            'user_id.integer' => 'user need be int.',
+            'product_id.required' => 'product is required.',
+            'product_id.integer' => 'user need be int.',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                "errors" => $validation->errors()->all()
+            ], 400);
+        }
+
+        try {
+            $this->favoriteService->buildDelete($request->all());
+
+            return response()->json([
+                'status' => 'deleted'
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getFile() . "\n" . $e->getLine() . "\n" . $e->getMessage());
+            return response()->json([
+                'errors' => [
+                    $e->getMessage(),
+                    'Internal Server Error - Check Logs'
+                ]
+            ], 500);
+        }
+    }
 }

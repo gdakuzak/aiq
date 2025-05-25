@@ -37,6 +37,17 @@ class FavoriteRepository
     }
 
     /**
+     * @param int $product_id
+     * @param int $user_id
+     * 
+     * @return mixed
+     */
+    public function getByProductIdAndUserId(int $product_id, int $user_id)
+    {
+        return $this->model->where('product_id', $product_id)->where('user_id', $user_id)->first();
+    }
+
+    /**
      * @param array $data
      * 
      * @return mixed

@@ -38,6 +38,19 @@ class FavoriteService
     }
 
     /**
+     * Return specific data from table.
+     *
+     * @param int $product_id
+     * @param int $user_id
+     * 
+     * @return mixed
+     */
+    public function renderByProductAndUser(int $product_id, int $user_id)
+    {
+        return $this->repository->getByProductIdAndUserId($product_id, $user_id);
+    }
+
+    /**
      * Insert data.
      *
      * @param array $data
@@ -67,11 +80,12 @@ class FavoriteService
     /**
      * Delete data.
      *
-     * @param int $id
+     * @param array $request
      * @return void
      */
-    public function buildDelete($id)
+    public function buildDelete(array $request)
     {
-        return $this->repository->delete($id);
+        $fav = $this->renderByProductAndUser($request['product_id'], $request['user_id']);
+        return $this->repository->delete($fav->id);
     }
 }

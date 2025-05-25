@@ -12,5 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('users', UserController::class);
 
 Route::prefix('favorite')->group(function () {
+    Route::get('/{user_id}', [FavoriteController::class, 'show']);
     Route::post('/', [FavoriteController::class, 'store']);
+    Route::delete('/', [FavoriteController::class, 'delete']);
 });
