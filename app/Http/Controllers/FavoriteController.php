@@ -16,7 +16,10 @@ class FavoriteController extends Controller
         $this->favoriteService = $favoriteService;
     }
 
-    public function show() {}
+    public function show(int $user_id)
+    {
+        return response()->json($this->favoriteService->renderByUser($user_id), 200);
+    }
 
     public function store(Request $request)
     {

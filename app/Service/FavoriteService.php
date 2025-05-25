@@ -19,7 +19,8 @@ class FavoriteService
 
     /**
      * Return all data from table.
-     *
+     * @todo: Add cache to this method
+     * 
      * @return mixed
      */
     public function renderList()
@@ -29,12 +30,33 @@ class FavoriteService
 
     /**
      * Return specific data from table.
+     * @todo: Add cache to this method
      *
      * @return mixed
      */
     public function renderEdit($id)
     {
         return $this->repository->getById($id);
+    }
+
+        
+    /** Return specific data (where user_id) from table.
+     *
+     * @return mixed
+     */
+    public function renderByUser($user_id)
+    {
+        $favs = [];
+        foreach ($this->repository->getByUserId($user_id) as $fav) {
+            if (Cache::has('product_' . $fav->product_id)) {
+                $favs[] = Cache::get('product_' . $fav->product_id);
+            } else {
+                $product = $this->fakeStoreService->getProductById($fav->product_id);
+                $favs[] = $product;
+            }
+        }
+
+        return $favs;
     }
 
     /**
