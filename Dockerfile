@@ -11,3 +11,5 @@ RUN docker-php-ext-install xml
 RUN docker-php-ext-install bcmath
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN echo "xdebug.mode=develop,coverage" > /usr/local/etc/php/conf.d/00_xdebug.ini
+
+RUN chmod 777 -R /application/storage

@@ -71,7 +71,7 @@ cd aiq
 
 - Caso for a primeira vez que voce está fazendo o startup, siga os passos:
   - Execute o comando de instalação das dependencias:
-  
+
     ```sh
     composer install
     ```
@@ -99,11 +99,10 @@ cd aiq
 - Testes automaticos com Github Actions: [Clique Aqui](https://github.com/gdakuzak/aiq/actions/workflows/tests.yaml)
 - Para testes no ambiente:
   - Após executar os passos do [Startup](#docker---startup), execute o comando:
+  
     ```sh
     php artisan test
     ```
-
-
 
 ### System Design
 
