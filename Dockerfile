@@ -10,4 +10,8 @@ RUN docker-php-ext-install fileinfo
 RUN docker-php-ext-install xml
 RUN docker-php-ext-install bcmath
 RUN pecl install xdebug && docker-php-ext-enable xdebug
-RUN echo "xdebug.mode=develop,coverage" > /usr/local/etc/php/conf.d/00_xdebug.ini]
+RUN echo "xdebug.mode=develop,coverage" > /usr/local/etc/php/conf.d/00_xdebug.ini
+
+WORKDIR /application
+COPY . /application
+RUN composer install --no-dev --optimize-autoloader
