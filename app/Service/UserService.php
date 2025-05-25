@@ -65,6 +65,7 @@ class UserService
      */
     public function buildDelete($id)
     {
+        // @todo: deletar tokens existentes.
         // @todo: procurar todos os favoritos e deletar antes de deletar o usuario.
         return $this->repository->delete($id);
     }

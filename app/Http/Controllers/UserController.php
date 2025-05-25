@@ -6,6 +6,7 @@ use Exception;
 use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,18 +30,14 @@ class UserController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function login(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'email' => 'required|unique:users',
-            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ], [
             'email.required' => 'email is required.',
-            'email.unique' => 'email already used.',
-            'name.required' => 'name is required.',
+            'password.required' => 'password is required.',
         ]);
 
         if ($validation->fails()) {
@@ -50,13 +47,60 @@ class UserController extends Controller
         }
 
         try {
-            $this->userService->buildInsert($request->merge([
-                'password' => Hash::make("AiqTeste01!")
+            if(Auth::attempt($request->only('email', 'password'))) {
+                $user = $this->userService->renderEdit(Auth::user()->id);
+                $token = explode('|',$user->createToken("TokenLogin")->plainTextToken);
+                return response()->json([
+                    'status' => 'success',
+                    'token' => $token[1],
+                ], 200);
+            }
+
+
+        } catch (\Exception $e) {
+            Log::error($e->getFile() . "\n" . $e->getLine() . "\n" . $e->getMessage());
+            return response()->json([
+                'errors' => [
+                    'Internal Server Error - Check Logs'
+                ]
+            ], 500);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'email' => 'required|unique:users',
+            'name' => 'required',
+            'password' => 'required|min:8',
+        ], [
+            'email.required' => 'email is required.',
+            'email.unique' => 'email already used.',
+            'name.required' => 'name is required.',
+            'password.required' => 'password is required.',
+            'password.min' => 'password must be at least 8 characters.',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                "errors" => $validation->errors()->all()
+            ], 400);
+        }
+
+        try {
+            $user = $this->userService->buildInsert($request->merge([
+                'password' => Hash::make($request->password),
             ])->all());
 
+            $token = explode('|',$user->createToken("TokenCriacao")->plainTextToken);
             return response()->json([
-                'status' => 'created'
+                'status' => 'created',
+                'token' => $token[1],
             ], 201);
+
         } catch (\Exception $e) {
             Log::error($e->getFile() . "\n" . $e->getLine() . "\n" . $e->getMessage());
             return response()->json([
