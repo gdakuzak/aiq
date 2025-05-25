@@ -123,4 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'fake_store_api' => env('FAKE_STORE_URL', 'https://fakestoreapi.com'),
 ];
