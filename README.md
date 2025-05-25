@@ -70,8 +70,14 @@ cd aiq
   ```
 
 - Caso for a primeira vez que voce está fazendo o startup, siga os passos:
-  - Execute o comando
+  - Execute o comando de instalação das dependencias:
   
+    ```sh
+    composer install
+    ```
+
+  - Execute o comando
+
     ```sh
     php artisan key:generate
     ```

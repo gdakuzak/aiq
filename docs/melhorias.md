@@ -5,3 +5,4 @@
 - Colocar nivel de permissoes para que nem todo mundo possa adicionar usuarios;
 - Implementar data provider nos testes;
 - Cobertura de Testes;
+- Melhor imagem docker para ir para Produção;
